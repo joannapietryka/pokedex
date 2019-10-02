@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "../Loader/Loader";
 
 const Wrapper = styled(Link)`
     width: 32%;
@@ -44,7 +45,7 @@ class Pokemon extends Component {
     return (
         <Wrapper to={`/details/${index}`}>  
             <Box>
-            <Image src={this.state.pokemon.sprites ? this.state.pokemon.sprites.front_shiny : ''} alt={`${name} img`} />
+                {this.state.pokemon.sprites ? <Image src={this.state.pokemon.sprites.front_shiny} alt={`${name} visualisation`} /> : <Loader />}
                 <p>{name}</p>
             </Box>
         </Wrapper>
