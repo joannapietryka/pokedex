@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import PokemonsList from "./components/PokemonsList/PokemonsList";
+import PokemonDetailed from "./components/PokemonDetailed/PokemonDetailed";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const GlobalStyle = createGlobalStyle`
+    body {
+      background-image: linear-gradient(to right top, #faf09c, #bceea6, #7de6c1, #47d9dd, #46c7ef, #72bbf7, #9fadf0, #c39edc, #e498c6, #f598aa, #f79f8e, #ebac7a);
+      min-height: 100vh;
+      font-family: "Trebuchet MS";
+    }
+  `
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <GlobalStyle/>
+          <Route
+            path="/dashboard"
+            component={() => <PokemonsList/>}
+          />
+          <Route
+            path="/details/:index"
+            component={(props) => <PokemonDetailed {...props} />}
+          />
+      </Router>
+    );
+  }
 }
 
 export default App;
