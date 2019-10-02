@@ -7,14 +7,13 @@ const Wrapper = styled(Link)`
     text-decoration: none;
     display: block;
     clear: both;
-    transition: 2s;
 `;
 
 const Box = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #9494ef;git commit -m "first commit"
+    background: #9494ef;
     margin: 1em;
     :hover {
         background: #b183e0;

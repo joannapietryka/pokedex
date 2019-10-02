@@ -14,16 +14,15 @@ class PokemonDetailed extends Component {
     }
 
     render() {
- 
-    console.log(this.state.pokemonInfo);
+    const { name, height, weight, base_experience, sprites} = this.state.pokemonInfo;
 
     return (
       <section>
-        <h1>{this.state.pokemonInfo.name}</h1>
-        <p>Height: {this.state.pokemonInfo.height}</p>
-        <p>Weight: {this.state.pokemonInfo.weight}</p>
-        <p>Experience level: {this.state.pokemonInfo.base_experience}</p>
-        {this.state.pokemonInfo.sprites ? <img src={this.state.pokemonInfo.sprites.front_default} alt={`${this.state.pokemonInfo.name} visualisation`} /> : <Loader />}
+        <h1>{name}</h1>
+        <p>Height: {height}</p>
+        <p>Weight: {weight}</p>
+        <p>Experience level: {base_experience}</p>
+        {sprites ? <img src={sprites.front_default} alt={`${name} visualisation`} /> : <Loader />}
       </section>
     );
   }
