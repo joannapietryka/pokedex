@@ -16,7 +16,6 @@ const Section = styled.section`
         }
     }
     `
-
 class PokemonsList extends Component {
     state = {
         pokemons: [],
@@ -29,6 +28,14 @@ class PokemonsList extends Component {
             .then(data => this.setState({ pokemons: data.results })
         );
     }
+
+    // fetchPokeApi = async () => {
+    //     await fetch('http://pokeapi.co/api/v2/pokemon/')
+    //             .then(response => response.json())
+    //             .then(data => this.setState({ pokemons: data.results })
+    //         );
+    // };
+    
 
     handleSearchInput = ({target: {value}}) => {
         this.setState({ searchTerm: value });
