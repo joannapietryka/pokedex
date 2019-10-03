@@ -10,10 +10,10 @@ const frame = keyframes`
 `;
 
 const Image = styled.img`
-    width: 30px;
-    height: auto;
-    display: block;
-    animation: ${frame} 4s infinite;
+  width: 30px;
+  height: auto;
+  display: block;
+  animation: ${frame} 4s infinite;
 `;
 
 const Loader = () => {

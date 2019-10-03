@@ -4,63 +4,60 @@ import Search from "../Search/Search";
 import Pokemon from "../Pokemon/Pokemon";
 
 const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 3em;
+  .wrapper {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    .wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        a {
-            color: #040b45;
-        }
+    flex-wrap: wrap;
+    justify-content: center;
+    a {
+      color: #040b45;
     }
-    `
+  }
+`;
 class PokemonsList extends Component {
-    state = {
-        pokemons: [],
-        searchTerm: ""
-    };
+  state = {
+    pokemons: [],
+    searchTerm: ""
+  };
 
-    componentDidMount() {
-        fetch('http://pokeapi.co/api/v2/pokemon/')
-            .then(response => response.json())
-            .then(data => this.setState({ pokemons: data.results })
-        );
-    }
+  componentDidMount() {
+    fetch("https://pokeapi.co/api/v2/pokemon/")
+      .then(response => response.json())
+      .then(data => this.setState({ pokemons: data.results }));
+  }
 
-    // fetchPokeApi = async () => {
-    //     await fetch('http://pokeapi.co/api/v2/pokemon/')
-    //             .then(response => response.json())
-    //             .then(data => this.setState({ pokemons: data.results })
-    //         );
-    // };
-    
+  //   fetchPokeApi = async () => {
+  //     await fetch("http://pokeapi.co/api/v2/pokemon/")
+  //       .then(response => response.json())
+  //       .then(data => this.setState({ pokemons: data.results }));
+  //   };
 
-    handleSearchInput = ({target: {value}}) => {
-        this.setState({ searchTerm: value });
-    };
+  handleSearchInput = ({ target: { value } }) => {
+    this.setState({ searchTerm: value });
+  };
 
-    render() {
+  render() {
+    const { searchTerm } = this.state;
 
-        const { searchTerm } = this.state;
-
-        return (
-        <>
+    return (
+      <>
         <Section>
-          <Search
-            value={searchTerm}
-            handleEvent={this.handleSearchInput}
-          />
-            <div className="wrapper">
-                {this.state.pokemons
-                    .filter(pokemon =>
-                        pokemon.name.includes(searchTerm))
-                        .map((pokemon, index) => (
-                        <Pokemon url={pokemon.url} name={pokemon.name} index={index + 1} key={pokemon.name} />
-                    ))
-                }   
-            </div>
+          <Search value={searchTerm} handleEvent={this.handleSearchInput} />
+          <div className="wrapper">
+            {this.state.pokemons
+              .filter(pokemon => pokemon.name.includes(searchTerm))
+              .map((pokemon, index) => (
+                <Pokemon
+                  url={pokemon.url}
+                  name={pokemon.name}
+                  index={index + 1}
+                  key={pokemon.name}
+                />
+              ))}
+          </div>
         </Section>
       </>
     );
