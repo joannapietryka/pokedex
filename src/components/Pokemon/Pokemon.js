@@ -18,9 +18,11 @@ const Box = styled.div`
     align-items: center;
     background: #9494ef;
     margin: 1em;
+    border-radius: 5%;
     :hover {
         background: #b183e0;
         transform: scale(1.05);
+        box-shadow: 5px 5px 7px #672990;
     }
 `;
 

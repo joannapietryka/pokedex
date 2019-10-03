@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
       background-image: linear-gradient(to right top, #faf09c, #bceea6, #7de6c1, #47d9dd, #46c7ef, #72bbf7, #9fadf0, #c39edc, #e498c6, #f598aa, #f79f8e, #ebac7a);
       min-height: 100vh;
       font-family: "Trebuchet MS";
+      color: #040b45;
     }
   `
 

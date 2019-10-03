@@ -11,6 +11,9 @@ const Section = styled.section`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        a {
+            color: #040b45;
+        }
     }
     `
 
