@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "../Loader/Loader";
@@ -30,36 +30,35 @@ const Box = styled.div`
 const Image = styled.img`
   width: 50%;
 `;
-class Pokemon extends Component {
-  state = {
-    pokemon: {}
+
+const Pokemon = ({ name, index }) => {
+  const [pokemon, setPokemon] = useState({});
+
+  const getPokemon = async id => {
+    const result = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+    const pokemon = await result.json();
+    setPokemon(pokemon);
   };
 
-  componentDidMount() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${this.props.index}/`)
-      .then(response => response.json())
-      .then(pokemon => this.setState({ pokemon }));
-  }
+  useEffect(() => {
+    getPokemon(index);
+  }, [index]);
 
-  render() {
-    const { name, index } = this.props;
-    const {
-      pokemon: { sprites }
-    } = this.state;
-
-    return (
-      <Wrapper to={`/details/${index}`}>
-        <Box>
-          {sprites ? (
-            <Image src={sprites.front_shiny} alt={`${name} visualisation`} />
-          ) : (
-            <Loader />
-          )}
-          <p>{name}</p>
-        </Box>
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper to={`/details/${index}`}>
+      <Box>
+        {pokemon.sprites ? (
+          <Image
+            src={pokemon.sprites.front_shiny}
+            alt={`${name} visualisation`}
+          />
+        ) : (
+          <Loader />
+        )}
+        <p>{name}</p>
+      </Box>
+    </Wrapper>
+  );
+};
 
 export default Pokemon;

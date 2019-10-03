@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Search from "../Search/Search";
 import Pokemon from "../Pokemon/Pokemon";
@@ -17,50 +17,44 @@ const Section = styled.section`
     }
   }
 `;
-class PokemonsList extends Component {
-  state = {
-    pokemons: [],
-    searchTerm: ""
+
+const PokemonsList = () => {
+  const [pokemons, setPokemons] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const getPokemons = async () => {
+    const result = await fetch("https://pokeapi.co/api/v2/pokemon/");
+    const pokemonsData = await result.json();
+    setPokemons(pokemonsData.results);
   };
 
-  componentDidMount() {
-    fetch("https://pokeapi.co/api/v2/pokemon/")
-      .then(response => response.json())
-      .then(data => this.setState({ pokemons: data.results }));
-  }
-
-  //   fetchPokeApi = async () => {
-  //     await fetch("http://pokeapi.co/api/v2/pokemon/")
-  //       .then(response => response.json())
-  //       .then(data => this.setState({ pokemons: data.results }));
-  //   };
-
-  handleSearchInput = ({ target: { value } }) => {
-    this.setState({ searchTerm: value });
+  const handleSearchInput = ({ target }) => {
+    setSearchTerm(target.value);
   };
 
-  render() {
-    const { searchTerm } = this.state;
+  useEffect(() => {
+    getPokemons();
+  }, []);
 
-    return (
-      <>
-        <Section>
-          <Search value={searchTerm} handleEvent={this.handleSearchInput} />
-          <div className="wrapper">
-            {this.state.pokemons
-              .filter(pokemon => pokemon.name.includes(searchTerm))
-              .map((pokemon, index) => (
-                <Pokemon
-                  url={pokemon.url}
-                  name={pokemon.name}
-                  index={index + 1}
-                  key={pokemon.name}
-                />
-              ))}
-          </div>
-        </Section>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Section>
+        <Search value={searchTerm} handleEvent={handleSearchInput} />
+        <div className="wrapper">
+          {pokemons
+            .filter(pokemon => pokemon.name.includes(searchTerm))
+            .map((pokemon, index) => (
+              <Pokemon
+                url={pokemon.url}
+                name={pokemon.name}
+                index={index + 1}
+                key={pokemon.name}
+              />
+            ))}
+        </div>
+      </Section>
+    </>
+  );
+};
+
 export default PokemonsList;

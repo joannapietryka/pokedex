@@ -11,15 +11,15 @@ const GlobalStyle = createGlobalStyle`
       font-family: "Trebuchet MS";
       color: #040b45;
     }
-  `
+  `;
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <GlobalStyle/>
+        <GlobalStyle />
         <Route path="/dashboard" component={PokemonsList} />
-        <Route path="/details/:index" component={PokemonDetailed} />
+        <Route path="/details/:id" component={PokemonDetailed} />
       </Router>
     );
   }

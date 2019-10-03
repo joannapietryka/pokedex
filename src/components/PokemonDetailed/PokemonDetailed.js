@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
 import Loader from "../Loader/Loader";
 import BackButton from "../BackButton/BackButton";
 
@@ -23,10 +23,20 @@ const PokemonDetails = styled.div`
   border-radius: 5px;
   width: 60%;
 `;
+
+const frame = keyframes`
+    0% { opacity: 0 } 
+    25% { opacity: .75}
+    50% { opacity: 1}
+    75% { opacity: .75}
+    100% { opacity: 0}
+`;
+
 const Image = styled.div`
   padding: 2em;
   img {
     transform: scale(1.5);
+    animation: ${frame} 4s infinite;
   }
 `;
 
@@ -36,50 +46,60 @@ const Info = styled.div`
     font-weight: 800;
   }
 `;
-class PokemonDetailed extends Component {
-  state = {
-    pokemonInfo: {}
+
+const PokemonDetailed = props => {
+  const [pokemonInfo, setPokemonInfo] = useState({});
+  const [src, setSrc] = useState(true);
+  const { id } = props.match.params;
+
+  const getPokemonInfo = async index => {
+    const result = await fetch(`https://pokeapi.co/api/v2/pokemon/${index}/`);
+    const pokemonInfo = await result.json();
+    setPokemonInfo(pokemonInfo);
   };
 
-  componentDidMount() {
-    const { index } = this.props.match.params;
-    fetch(`https://pokeapi.co/api/v2/pokemon/${index}`)
-      .then(response => response.json())
-      .then(pokemonInfo => this.setState({ pokemonInfo }));
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      src ? setSrc(false) : setSrc(true);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [src]);
 
-  render() {
-    const {
-      pokemonInfo: { name, height, weight, base_experience, sprites }
-    } = this.state;
-    console.log(sprites);
+  useEffect(() => {
+    getPokemonInfo(id);
+  }, [id]);
 
-    return (
-      <Section>
-        <BackButton />
-        <h1>{name}</h1>
-        <PokemonDetails>
-          <Info>
-            <p>
-              Height: <span>{height}</span>
-            </p>
-            <p>
-              Weight: <span>{weight}</span>
-            </p>
-            <p>
-              Experience level: <span>{base_experience}</span>
-            </p>
-          </Info>
-          <Image>
-            {sprites ? (
-              <img src={sprites.front_default} alt={`${name} visualisation`} />
-            ) : (
-              <Loader />
-            )}
-          </Image>
-        </PokemonDetails>
-      </Section>
-    );
-  }
-}
+  const { name, height, weight, base_experience, sprites } = pokemonInfo;
+
+  return (
+    <Section>
+      <BackButton />
+      <h1>{name}</h1>
+      <PokemonDetails>
+        <Info>
+          <p>
+            Height: <span>{height}</span>
+          </p>
+          <p>
+            Weight: <span>{weight}</span>
+          </p>
+          <p>
+            Experience level: <span>{base_experience}</span>
+          </p>
+        </Info>
+        <Image>
+          {sprites ? (
+            <img
+              src={src ? sprites.front_default : sprites.back_default}
+              alt={`${name} visualisation`}
+            />
+          ) : (
+            <Loader />
+          )}
+        </Image>
+      </PokemonDetails>
+    </Section>
+  );
+};
+
 export default PokemonDetailed;
