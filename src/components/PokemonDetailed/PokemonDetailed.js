@@ -7,14 +7,14 @@ class PokemonDetailed extends Component {
     };
 
     componentDidMount() {
-    const  { index } = this.props.match.params
-     fetch(`http://pokeapi.co/api/v2/pokemon/${index}`)
-      .then(response => response.json())
-      .then(response => this.setState({ pokemonInfo: response }));
+      const  { index } = this.props.match.params
+       fetch(`http://pokeapi.co/api/v2/pokemon/${index}`)
+        .then(response => response.json())
+        .then(pokemonInfo => this.setState({ pokemonInfo }));
     }
 
     render() {
-    const { name, height, weight, base_experience, sprites} = this.state.pokemonInfo;
+      const { pokemonInfo: {name, height, weight, base_experience, sprites} } = this.state;
 
     return (
       <section>

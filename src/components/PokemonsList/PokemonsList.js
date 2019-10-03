@@ -27,27 +27,29 @@ class PokemonsList extends Component {
         );
     }
 
-    handleSearchInput = event => {
-        this.setState({ searchTerm: event.target.value });
+    handleSearchInput = ({target: {value}}) => {
+        this.setState({ searchTerm: value });
     };
 
     render() {
+
+        const { searchTerm } = this.state;
+
         return (
         <>
         <Section>
           <Search
-            value={this.state.searchTerm}
+            value={searchTerm}
             handleEvent={this.handleSearchInput}
           />
-             <div className="wrapper">
-                    {this.state.pokemons
-                        .filter(pokemon =>
-                        `${pokemon.name}`
-                            .includes(this.state.searchTerm))
-                            .map((pokemon, index) => (
-                            <Pokemon url={pokemon.url} name={pokemon.name} index={index + 1} key={pokemon.name} />
-                        ))
-                    }
+            <div className="wrapper">
+                {this.state.pokemons
+                    .filter(pokemon =>
+                        pokemon.name.includes(searchTerm))
+                        .map((pokemon, index) => (
+                        <Pokemon url={pokemon.url} name={pokemon.name} index={index + 1} key={pokemon.name} />
+                    ))
+                }   
             </div>
         </Section>
       </>

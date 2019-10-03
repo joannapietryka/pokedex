@@ -17,14 +17,8 @@ class App extends Component {
     return (
       <Router>
         <GlobalStyle/>
-          <Route
-            path="/dashboard"
-            component={() => <PokemonsList/>}
-          />
-          <Route
-            path="/details/:index"
-            component={(props) => <PokemonDetailed {...props} />}
-          />
+        <Route path="/dashboard" component={PokemonsList} />
+        <Route path="/details/:index" component={PokemonDetailed} />
       </Router>
     );
   }

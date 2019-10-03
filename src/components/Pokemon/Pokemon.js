@@ -4,10 +4,12 @@ import styled from "styled-components";
 import Loader from "../Loader/Loader";
 
 const Wrapper = styled(Link)`
-    width: 32%;
+    width: 50%;
     text-decoration: none;
-    display: block;
-    clear: both;
+    text-transform: capitalize;
+    @media(min-width: 768px) {
+        width: 23%;
+    }
 `;
 
 const Box = styled.div`
@@ -24,28 +26,27 @@ const Box = styled.div`
 
 const Image = styled.img`
     width: 45%;
-    float: left;
 `;
-
 class Pokemon extends Component {
 
     state = {
         pokemon: {}
     };
 
-    componentDidMount() {
+   componentDidMount() {
         fetch(`https://pokeapi.co/api/v2/pokemon/${this.props.index}/`)
             .then(response => response.json())
-            .then(response => this.setState({ pokemon: response }));
-    }
+            .then(pokemon => this.setState({ pokemon }));
+   }
 
-    render () {
-        const { name, index } = this.props;
+   render () {
+       const { name, index } = this.props;
+       const { pokemon: {sprites} } = this.state
 
     return (
         <Wrapper to={`/details/${index}`}>  
             <Box>
-                {this.state.pokemon.sprites ? <Image src={this.state.pokemon.sprites.front_shiny} alt={`${name} visualisation`} /> : <Loader />}
+                {sprites ? <Image src={sprites.front_shiny} alt={`${name} visualisation`} /> : <Loader />}
                 <p>{name}</p>
             </Box>
         </Wrapper>
