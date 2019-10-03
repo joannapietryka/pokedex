@@ -8,7 +8,10 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 90vh;
+  @media (min-width: 768px) {
+    height: 80vh;
+  }
   h1 {
     text-transform: capitalize;
     font-size: 2.3em;
@@ -21,7 +24,12 @@ const PokemonDetails = styled.div`
   justify-content: space-around;
   background: #73e4c6;
   border-radius: 5px;
-  width: 60%;
+  width: 75%;
+  padding: 2em;
+  @media (min-width: 768px) {
+    width: 50%;
+    padding: 3em;
+  }
 `;
 
 const frame = keyframes`

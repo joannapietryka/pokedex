@@ -4,7 +4,10 @@ import styled from "styled-components";
 
 const LinkWrapper = styled.div`
   align-self: flex-start;
-  margin-left: 4em;
+  margin-left: 1.5em;
+  @media (min-width: 768px) {
+    margin-left: 4em;
+  }
   button {
     background: #d3efa3;
     border: none;
